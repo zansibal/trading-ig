@@ -1037,6 +1037,7 @@ class IGService:
         quote_id,
         size,
         session=None,
+        deal_reference=None,
         time_in_force=None,
     ):
         """Closes one or more OTC positions"""
@@ -1052,6 +1053,8 @@ class IGService:
             "quoteId": quote_id,
             "size": size,
         }
+        if deal_reference is not None:
+            params["dealReference"] = deal_reference
         if time_in_force is not None:
             params["timeInForce"] = time_in_force
         endpoint = "/positions/otc"
@@ -1060,9 +1063,9 @@ class IGService:
         print(response)
 
         if response.status_code == 200:
-            deal_reference = json.loads(response.text)["dealReference"]
-            print(deal_reference)
-            return self.fetch_deal_by_deal_reference(deal_reference)
+            deal_reference2 = json.loads(response.text)["dealReference"]
+            print(deal_reference2)
+            return self.fetch_deal_by_deal_reference(deal_reference2)
         else:
             raise IGException(response.text)
 
@@ -1085,6 +1088,7 @@ class IGService:
         trailing_stop,
         trailing_stop_increment,
         session=None,
+        deal_reference=None,
         time_in_force=None,
     ):
         """Creates an OTC position"""
@@ -1108,6 +1112,8 @@ class IGService:
             "trailingStop": trailing_stop,
             "trailingStopIncrement": trailing_stop_increment,
         }
+        if deal_reference is not None:
+            params["dealReference"] = deal_reference
         if time_in_force is not None:
             params["timeInForce"] = time_in_force
 
@@ -1118,9 +1124,9 @@ class IGService:
         print(response)
 
         if response.status_code == 200:
-            deal_reference = json.loads(response.text)["dealReference"]
-            print(deal_reference)
-            return self.fetch_deal_by_deal_reference(deal_reference)
+            deal_reference2 = json.loads(response.text)["dealReference"]
+            print(deal_reference2)
+            return self.fetch_deal_by_deal_reference(deal_reference2)
         else:
             raise IGException(response.text)
 
